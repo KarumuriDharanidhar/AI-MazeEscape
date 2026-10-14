@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b19">
+  <title>AI Maze Escape</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background-grid" aria-hidden="true"></div>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">PROCEDURAL SURVIVAL // BROWSER EDITION</p>
+        <h1>AI <span>MAZE</span> ESCAPE</h1>
+      </div>
+      <div class="top-actions">
+        <button id="soundBtn" class="ghost" type="button" aria-pressed="false">SOUND: OFF</button>
+        <button id="pauseBtn" class="ghost" type="button">PAUSE</button>
+      </div>
+    </header>
+
+    <section class="stats" aria-label="Game status">
+      <div class="stat"><span>LEVEL</span><strong id="level">1</strong></div>
+      <div class="stat"><span>SCORE</span><strong id="score">0</strong></div>
+      <div class="stat"><span>LIVES</span><strong id="lives">♥ ♥ ♥</strong></div>
+      <div class="stat"><span>BEST</span><strong id="best">0</strong></div>
+      <div class="stat"><span>TIME</span><strong id="time">00:00</strong></div>
+    </section>
+
+    <section class="game-layout">
+      <div class="board-wrap">
+        <canvas id="game" width="756" height="532" aria-label="AI Maze Escape game board"></canvas>
+        <div id="overlay" class="overlay">
+          <div class="overlay-card">
+            <p class="eyebrow">YOUR MISSION STARTS HERE</p>
+            <h2 id="overlayTitle">Escape the maze.</h2>
+            <p id="overlayText">Find the glowing key, avoid the AI hunter, and reach the exit.</p>
+            <button id="mainBtn" class="primary" type="button">START GAME</button>
+          </div>
+        </div>
+      </div>
+      <aside class="side-panel">
+        <div class="panel-card objective">
+          <h3>MISSION OBJECTIVE</h3>
+          <div class="legend"><span class="dot player-dot"></span><div><b>YOU</b><small>Navigate the maze</small></div></div>
+          <div class="legend"><span class="dot key-dot"></span><div><b>ENERGY KEY</b><small id="keyStatus">Collect it to unlock the exit</small></div></div>
+          <div class="legend"><span class="dot enemy-dot"></span><div><b>AI HUNTER</b><small>Uses BFS to chase you</small></div></div>
+          <div class="legend"><span class="dot exit-dot"></span><div><b>EXIT</b><small id="exitStatus">Locked until key collected</small></div></div>
+        </div>
+        <div class="panel-card">
+          <h3>CONTROLS</h3>
+          <div class="keyrow"><span>MOVE</span><div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></div></div>
+          <div class="keyrow"><span>OR MOVE</span><div><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd></div></div>
+          <div class="keyrow"><span>AI ROUTE HINT</span><kbd>SPACE</kbd></div>
+          <div class="keyrow"><span>PAUSE</span><kbd>ESC</kbd></div>
+        </div>
+        <div class="panel-card status-card">
+          <h3>SYSTEM MESSAGE</h3>
+          <p id="message" aria-live="polite">System ready. Press START GAME.</p>
+          <button id="hintBtn" class="secondary" type="button">SHOW AI ROUTE · 25 PTS</button>
+          <button id="newBtn" class="text-button" type="button">GENERATE NEW MAZE ↻</button>
+        </div>
+      </aside>
+    </section>
+    <footer><span>AI MAZE ESCAPE</span><span>MAZE: DFS · PATHFINDING: BFS</span><span>BUILT FOR THE WEB</span></footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
