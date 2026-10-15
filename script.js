@@ -348,7 +348,39 @@
     if(soundOn) beep(700,.08);
   });
   window.addEventListener("keydown", handleKey);
-  window.addEventListener("blur", () => { if(mode==="playing") pauseGame(); });
+
+  // Touch-friendly directional buttons. Holding a button moves repeatedly.
+  let touchMoveTimer = null;
+  function stopTouchMove() {
+    if (touchMoveTimer !== null) { clearInterval(touchMoveTimer); touchMoveTimer = null; }
+  }
+  document.querySelectorAll(".direction[data-dx]").forEach(button => {
+    if (button.disabled) return;
+    const startMove = event => {
+      event.preventDefault();
+      stopTouchMove();
+      const dx = Number(button.dataset.dx);
+      const dy = Number(button.dataset.dy);
+      if (mode !== "playing") {
+        say("Press START GAME first.", 1.5);
+        return;
+      }
+      movePlayer(dx, dy);
+      touchMoveTimer = setInterval(() => movePlayer(dx, dy), 145);
+      if (button.setPointerCapture && event.pointerId !== undefined) {
+        try { button.setPointerCapture(event.pointerId); } catch (_) {}
+      }
+    };
+    button.addEventListener("pointerdown", startMove);
+    button.addEventListener("pointerup", stopTouchMove);
+    button.addEventListener("pointercancel", stopTouchMove);
+    button.addEventListener("lostpointercapture", stopTouchMove);
+    button.addEventListener("contextmenu", event => event.preventDefault());
+  });
+  $("mobileHintBtn").addEventListener("click", useHint);
+  $("mobilePauseBtn").addEventListener("click", pauseGame);
+  window.addEventListener("pointerup", stopTouchMove);
+  window.addEventListener("blur", () => { stopTouchMove(); if(mode==="playing") pauseGame(); });
 
   grid=generateMaze();
   player=[1,1]; exit=[COLS-2,ROWS-2]; key=[3,1]; enemy=[COLS-2,1];

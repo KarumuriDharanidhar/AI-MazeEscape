@@ -37,3 +37,7 @@ GitHub Pages documentation: https://docs.github.com/en/pages/getting-started-wit
 - This browser version is separate from the Python/Pygame version; it does not replace `main.py`.
 - The best score is stored in local storage in the browser on the device where you play.
 - Google Fonts are used when online; system fonts are used as fallbacks.
+
+
+### Mobile touch controls
+On phones and tablets, use the on-screen arrow pad to move. The HINT and PAUSE buttons are also available below the maze. Keyboard controls continue to work on desktop.
